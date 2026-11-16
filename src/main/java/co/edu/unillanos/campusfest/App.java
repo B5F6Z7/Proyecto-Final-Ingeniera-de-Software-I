@@ -1,6 +1,9 @@
 package co.edu.unillanos.campusfest;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import co.edu.unillanos.campusfest.application.port.Reloj;
@@ -10,7 +13,7 @@ import co.edu.unillanos.campusfest.application.usecase.EditarEvento;
 import co.edu.unillanos.campusfest.application.usecase.RegistrarIngreso;
 import co.edu.unillanos.campusfest.application.usecase.ReservarEntrada;
 import co.edu.unillanos.campusfest.domain.Evento;
-import co.edu.unillanos.campusfest.infrastructure.persistence.RepositorioEventosEnMemoria;
+import co.edu.unillanos.campusfest.infrastructure.persistence.RepositorioEventosH2;
 import co.edu.unillanos.campusfest.infrastructure.reloj.RelojDelSistema;
 import co.edu.unillanos.campusfest.infrastructure.ui.PantallaCuposController;
 import co.edu.unillanos.campusfest.infrastructure.ui.PantallaEventoController;
@@ -31,10 +34,14 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     private static final String VISTAS = "vistas/";
+    private static final String URL_BASE_DE_DATOS = "jdbc:h2:./datos/campusfest";
+
+    private Connection conexion;
 
     @Override
-    public void start(Stage escenario) throws IOException {
-        RepositorioEventos repositorio = new RepositorioEventosEnMemoria();
+    public void start(Stage escenario) throws IOException, SQLException {
+        conexion = DriverManager.getConnection(URL_BASE_DE_DATOS, "sa", "");
+        RepositorioEventos repositorio = new RepositorioEventosH2(conexion);
         Reloj reloj = new RelojDelSistema();
         cargarEventosDeEjemplo(repositorio);
 
@@ -59,6 +66,13 @@ public class App extends Application {
         escenario.setTitle("CampusFest");
         escenario.setScene(escena);
         escenario.show();
+    }
+
+    @Override
+    public void stop() throws SQLException {
+        if (conexion != null) {
+            conexion.close();
+        }
     }
 
     private Tab pestana(String titulo, String vista, Object controlador) throws IOException {

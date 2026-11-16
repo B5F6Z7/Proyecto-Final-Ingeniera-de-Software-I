@@ -1,41 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <!-- CU3 · Editar evento. App asigna PantallaEventoController con setController. -->
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      styleClass="pantalla" spacing="14">
-    <padding>
-        <Insets top="24" right="24" bottom="24" left="24"/>
-    </padding>
-    <Label text="Editar evento" styleClass="titulo"/>
-    <Label text="Cargue el evento, cambie sus datos y guarde. El aforo no puede quedar por debajo de los cupos ocupados."
-           styleClass="subtitulo" wrapText="true"/>
-    <GridPane hgap="10" vgap="10">
-        <Label text="Evento:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <HBox spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="1">
-            <TextField fx:id="campoEventoId" promptText="ev-1" onAction="#alCargar"/>
-            <Button text="Cargar" onAction="#alCargar"/>
+      styleClass="pantalla" spacing="20">
+
+    <VBox spacing="4">
+        <Label text="CU3 · ORGANIZADOR" styleClass="antetitulo"/>
+        <Label text="Editar evento" styleClass="titulo"/>
+        <Label text="Cargue el evento, cambie sus datos y guarde. El aforo no puede quedar por debajo de los cupos ocupados y bloqueados."
+               styleClass="subtitulo" wrapText="true"/>
+    </VBox>
+
+    <VBox styleClass="tarjeta" spacing="8">
+        <Label text="Identificador del evento" styleClass="etiqueta-campo"/>
+        <HBox spacing="10">
+            <TextField fx:id="campoEventoId" promptText="Por ejemplo: ev-1" onAction="#alCargar"
+                       HBox.hgrow="ALWAYS"/>
+            <Button text="Cargar evento" styleClass="boton-secundario" onAction="#alCargar"/>
         </HBox>
-        <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="campoNombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-        <Label text="Fecha:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1">
-            <DatePicker fx:id="campoFecha"/>
-            <TextField fx:id="campoHora" promptText="HH:mm" prefColumnCount="5"/>
+    </VBox>
+
+    <VBox styleClass="tarjeta" spacing="14">
+        <Label text="Datos del evento" styleClass="tarjeta-titulo"/>
+        <VBox spacing="6">
+            <Label text="Nombre" styleClass="etiqueta-campo"/>
+            <TextField fx:id="campoNombre"/>
+        </VBox>
+        <HBox spacing="14">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="Fecha" styleClass="etiqueta-campo"/>
+                <DatePicker fx:id="campoFecha" maxWidth="Infinity"/>
+            </VBox>
+            <VBox spacing="6">
+                <Label text="Hora (HH:mm)" styleClass="etiqueta-campo"/>
+                <TextField fx:id="campoHora" promptText="19:00" prefColumnCount="6"/>
+            </VBox>
         </HBox>
-        <Label text="Lugar:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="campoLugar" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-        <Label text="Aforo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="campoAforo" prefColumnCount="6" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-    </GridPane>
-    <Button text="Guardar cambios" styleClass="boton-principal" onAction="#alGuardar"/>
-    <Label fx:id="etiquetaMensaje" styleClass="mensaje" wrapText="true"/>
+        <HBox spacing="14">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="Lugar" styleClass="etiqueta-campo"/>
+                <TextField fx:id="campoLugar"/>
+            </VBox>
+            <VBox spacing="6">
+                <Label text="Aforo" styleClass="etiqueta-campo"/>
+                <TextField fx:id="campoAforo" prefColumnCount="6"/>
+            </VBox>
+        </HBox>
+        <HBox>
+            <Button text="Guardar cambios" styleClass="boton-principal" onAction="#alGuardar"/>
+        </HBox>
+    </VBox>
+
+    <Label fx:id="etiquetaMensaje" styleClass="mensaje" wrapText="true" maxWidth="Infinity"/>
 </VBox>

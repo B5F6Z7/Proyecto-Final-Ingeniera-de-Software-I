@@ -31,7 +31,7 @@
             <Button text="Registrar ingreso" styleClass="boton-principal,boton-grande"
                     onAction="#alRegistrar"/>
         </HBox>
-        <Label text="Solo pueden ingresar las reservas confirmadas de este evento, una sola vez."
+        <Label text="El resultado o el motivo del rechazo aparece abajo."
                styleClass="ayuda" wrapText="true"/>
     </VBox>
 

@@ -31,7 +31,7 @@
     <VBox styleClass="tarjeta,tarjeta-resultado" spacing="2">
         <Label text="CUPOS DISPONIBLES" styleClass="resultado-titulo"/>
         <Label fx:id="etiquetaCupos" text="—" styleClass="resultado-numero"/>
-        <Label text="Aforo menos bloqueados, confirmadas y pendientes vigentes."
+        <Label text="Cupos que todavía se pueden reservar en este evento."
                styleClass="ayuda" wrapText="true"/>
     </VBox>
 

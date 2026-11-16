@@ -14,7 +14,7 @@
     <VBox spacing="4">
         <Label text="CU3 · ORGANIZADOR" styleClass="antetitulo"/>
         <Label text="Editar evento" styleClass="titulo"/>
-        <Label text="Cargue el evento, cambie sus datos y guarde. El aforo no puede quedar por debajo de los cupos ocupados y bloqueados."
+        <Label text="Cargue el evento, cambie sus datos y guarde. Si un cambio no se permite, el motivo aparece abajo."
                styleClass="subtitulo" wrapText="true"/>
     </VBox>
 

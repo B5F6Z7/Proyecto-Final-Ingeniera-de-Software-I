@@ -68,7 +68,7 @@ co.edu.unillanos.campusfest
 └── infrastructure
     ├── persistence                   ← RepositorioEventosEnMemoria, RepositorioEventosH2
     ├── reloj                         ← RelojDelSistema (la única clase que llama a now())
-    └── ui                            ← Controladores JavaFX de las cuatro pantallas
+    └── ui                            ← Controladores de las cuatro pantallas y VentanaPrincipal (menú lateral)
 
 src/main/resources
 ├── co/edu/unillanos/campusfest/vistas/   ← 4 FXML + campusfest.css
@@ -102,7 +102,7 @@ Decisiones de diseño:
   proponer la implementación de las clases que hacen pasar las pruebas.
 - Generar el código de las entidades (`Evento`, `Reserva`, `EstadoReserva`, `Asistencia`), los
   puertos, los cuatro casos de uso, los adaptadores (`RepositorioEventosEnMemoria`,
-  `RepositorioEventosH2`, `RelojDelSistema`), los controladores, las vistas FXML, el CSS,
+  `RepositorioEventosH2`, `RelojDelSistema`), los controladores, `VentanaPrincipal`, las vistas FXML, el CSS (incluido el rediseño visual),
   `schema.sql`, `App`, `Launcher` y este README.
 - Ejecutar `mvn test` y corregir los errores encontrados.
 
@@ -111,13 +111,26 @@ regla de dependencia, controladores sin reglas del negocio, sin `now()` fuera de
 
 **Propuestas de la IA que violaban el diseño y cómo se corrigieron:**
 
-1. *Regla repetida en `Evento` (principio «cada regla en un solo lugar»).* La primera versión de
+1. *Reglas del negocio escritas en las vistas FXML (señal de alerta «reglas dentro de un FXML»).*
+   Al rediseñar la interfaz (PR «Rediseño de la interfaz JavaFX»), la IA escribió en los FXML
+   textos que repetían las reglas: el plazo de «10 minutos» en `pantalla-reserva.fxml`, la fórmula
+   «aforo menos bloqueados, confirmadas y pendientes vigentes» en `pantalla-cupos.fxml`, el aforo
+   mínimo en `pantalla-evento.fxml` y el ingreso «una sola vez» en `pantalla-ingreso.fxml`. Esas
+   reglas viven en `Evento` y `Reserva`; si el plazo cambiara, la pantalla diría algo falso. Se
+   corrigió en el commit «Quitar de las vistas FXML los textos que repetían reglas del negocio»:
+   las vistas ahora solo muestran el resultado o el mensaje que devuelve el caso de uso
+   (por ejemplo, la hora límite de la reserva sale de `Reserva.getVenceEn()`).
+
+Las dos correcciones siguientes se hicieron mientras se escribía el código, antes del primer
+commit, por eso no tienen un commit propio en el historial:
+
+2. *Regla repetida en `Evento` (principio «cada regla en un solo lugar»).* La primera versión de
    `Evento.cambiarAforo` calculaba el aforo mínimo por su cuenta
    (`int minimo = bloqueados + cuposOcupadosPorReservas(ahora)`), repitiendo la fórmula que ya
    estaba en el método privado `aforoMinimo`. Si la regla cambiaba, había que cambiarla en dos
    sitios. Se corrigió para que `cambiarAforo` llame a `aforoMinimo(ahora)` y solo derive de ahí
    los cupos ocupados que necesita para el mensaje de error.
-2. *Error en el adaptador H2.* La primera versión de `schema.sql` tenía un `;` dentro de un
+3. *Error en el adaptador H2.* La primera versión de `schema.sql` tenía un `;` dentro de un
    comentario y `RepositorioEventosH2` dividía el script por `;` sin quitar los comentarios, así que
    las 16 pruebas de H2 fallaban al crear el esquema. Se corrigió en el adaptador (método
    `sinComentarios`), sin tocar las pruebas.

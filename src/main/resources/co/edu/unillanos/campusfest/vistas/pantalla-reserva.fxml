@@ -13,7 +13,7 @@
     <VBox spacing="4">
         <Label text="CU2 · ESTUDIANTE" styleClass="antetitulo"/>
         <Label text="Reservar una entrada" styleClass="titulo"/>
-        <Label text="La reserva queda pendiente y tiene 10 minutos para confirmarse; si no, el cupo se libera."
+        <Label text="Solicite la reserva y confírmela antes de la hora límite que le muestra el sistema."
                styleClass="subtitulo" wrapText="true"/>
     </VBox>
 
@@ -40,7 +40,7 @@
     <VBox styleClass="tarjeta" spacing="12">
         <HBox spacing="10" styleClass="paso">
             <Label text="2" styleClass="paso-numero" minWidth="28" minHeight="28"/>
-            <Label text="Confirmar antes de 10 minutos" styleClass="tarjeta-titulo"/>
+            <Label text="Confirmar la reserva" styleClass="tarjeta-titulo"/>
         </HBox>
         <VBox spacing="6">
             <Label text="Código de la reserva (es el contenido del QR)" styleClass="etiqueta-campo"/>

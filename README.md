@@ -8,7 +8,7 @@ siguiendo la arquitectura limpia, los principios de diseño y los patrones GRASP
 
 | Nombre | Usuario de GitHub | Aporte principal |
 | --- | --- | --- |
-| _(completar)_ | _(completar)_ | _(completar)_ |
+| _(Daniel Samboni)_ | _(DanielSamboni)_ | _(Controladores de interfaz grafica y revisión de codigo)_ |
 | _(completar)_ | _(completar)_ | _(completar)_ |
 | _(completar)_ | _(completar)_ | _(completar)_ |
 | _(completar)_ | _(completar)_ | _(completar)_ |
@@ -134,3 +134,5 @@ commit, por eso no tienen un commit propio en el historial:
    comentario y `RepositorioEventosH2` dividía el script por `;` sin quitar los comentarios, así que
    las 16 pruebas de H2 fallaban al crear el esquema. Se corrigió en el adaptador (método
    `sinComentarios`), sin tocar las pruebas.
+   
+   Revisado por Daniel Samboni

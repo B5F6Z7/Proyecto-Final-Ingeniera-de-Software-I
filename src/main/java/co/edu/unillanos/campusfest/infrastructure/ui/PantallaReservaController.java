@@ -34,13 +34,7 @@ public class PantallaReservaController {
     @FXML
     private void alSolicitar() {
         String eventoId = campoEventoId.getText().trim();
-        String estudianteId = campoEstudianteId.getText().trim(); // Se agrega el trim() faltante
-
-        // Validación exclusiva de la UI: campos vacíos
-        if (eventoId.isEmpty() || estudianteId.isEmpty()) {
-            Mensaje.error(etiquetaMensaje, "Los campos Evento y Estudiante no pueden estar vacíos.");
-            return;
-        }
+        String estudianteId = campoEstudianteId.getText().trim();
 
         try {
             Reserva reserva = reservarEntrada.solicitarReserva(eventoId, estudianteId);
@@ -57,11 +51,6 @@ public class PantallaReservaController {
         String eventoId = campoEventoId.getText().trim();
         String codigo = campoCodigo.getText().trim();
 
-        if (eventoId.isEmpty() || codigo.isEmpty()) {
-            Mensaje.error(etiquetaMensaje, "Los campos Evento y Código no pueden estar vacíos.");
-            return;
-        }
-
         try {
             Reserva reserva = reservarEntrada.confirmarReserva(eventoId, codigo);
             Mensaje.exito(etiquetaMensaje, "Reserva confirmada. Su código QR es " + reserva.getCodigo());
@@ -69,3 +58,4 @@ public class PantallaReservaController {
             Mensaje.error(etiquetaMensaje, e.getMessage());
         }
     }
+}

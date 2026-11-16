@@ -1,0 +1,51 @@
+/* Estilos de CampusFest. JavaFX solo entiende propiedades con prefijo -fx-. */
+
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica", sans-serif;
+    -fx-font-size: 14px;
+}
+
+.pantalla {
+    -fx-background-color: #ffffff;
+}
+
+.titulo {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f3a68;
+}
+
+.subtitulo {
+    -fx-text-fill: #5b6475;
+}
+
+.boton-principal {
+    -fx-background-color: #1f6feb;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.boton-principal:hover {
+    -fx-background-color: #1858c4;
+}
+
+.mensaje {
+    -fx-padding: 10;
+    -fx-background-radius: 6;
+}
+
+.mensaje-exito {
+    -fx-background-color: #e6f4ea;
+    -fx-text-fill: #1e6b34;
+}
+
+.mensaje-error {
+    -fx-background-color: #fdecea;
+    -fx-text-fill: #a12622;
+}
+
+.tab-pane .tab {
+    -fx-padding: 6 14 6 14;
+}

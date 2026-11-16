@@ -19,12 +19,11 @@ import co.edu.unillanos.campusfest.infrastructure.ui.PantallaCuposController;
 import co.edu.unillanos.campusfest.infrastructure.ui.PantallaEventoController;
 import co.edu.unillanos.campusfest.infrastructure.ui.PantallaIngresoController;
 import co.edu.unillanos.campusfest.infrastructure.ui.PantallaReservaController;
+import co.edu.unillanos.campusfest.infrastructure.ui.VentanaPrincipal;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
 /**
@@ -50,20 +49,21 @@ public class App extends Application {
         EditarEvento editarEvento = new EditarEvento(repositorio, reloj);
         RegistrarIngreso registrarIngreso = new RegistrarIngreso(repositorio, reloj);
 
-        TabPane pestanas = new TabPane(
-                pestana("CU1 · Consultar cupos", "pantalla-cupos.fxml",
-                        new PantallaCuposController(consultarCupos)),
-                pestana("CU2 · Reservar entrada", "pantalla-reserva.fxml",
-                        new PantallaReservaController(reservarEntrada)),
-                pestana("CU3 · Editar evento", "pantalla-evento.fxml",
-                        new PantallaEventoController(editarEvento)),
-                pestana("CU4 · Registrar ingreso", "pantalla-ingreso.fxml",
-                        new PantallaIngresoController(registrarIngreso)));
-        pestanas.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        VentanaPrincipal ventana = new VentanaPrincipal();
+        ventana.agregarPantalla("1", "Consultar cupos", "Estudiante",
+                cargarVista("pantalla-cupos.fxml", new PantallaCuposController(consultarCupos)));
+        ventana.agregarPantalla("2", "Reservar entrada", "Estudiante",
+                cargarVista("pantalla-reserva.fxml", new PantallaReservaController(reservarEntrada)));
+        ventana.agregarPantalla("3", "Editar evento", "Organizador",
+                cargarVista("pantalla-evento.fxml", new PantallaEventoController(editarEvento)));
+        ventana.agregarPantalla("4", "Registrar ingreso", "Encargado de la entrada",
+                cargarVista("pantalla-ingreso.fxml", new PantallaIngresoController(registrarIngreso)));
 
-        Scene escena = new Scene(pestanas, 760, 540);
+        Scene escena = new Scene(ventana.getRaiz(), 1040, 680);
         escena.getStylesheets().add(App.class.getResource(VISTAS + "campusfest.css").toExternalForm());
         escenario.setTitle("CampusFest");
+        escenario.setMinWidth(860);
+        escenario.setMinHeight(560);
         escenario.setScene(escena);
         escenario.show();
     }
@@ -75,11 +75,10 @@ public class App extends Application {
         }
     }
 
-    private Tab pestana(String titulo, String vista, Object controlador) throws IOException {
+    private Parent cargarVista(String vista, Object controlador) throws IOException {
         FXMLLoader cargador = new FXMLLoader(App.class.getResource(VISTAS + vista));
         cargador.setController(controlador);
-        Parent contenido = cargador.load();
-        return new Tab(titulo, contenido);
+        return cargador.load();
     }
 
     /** Deja eventos de ejemplo la primera vez que se abre la aplicación. */

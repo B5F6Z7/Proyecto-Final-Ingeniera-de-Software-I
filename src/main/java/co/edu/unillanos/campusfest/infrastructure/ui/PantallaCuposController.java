@@ -14,6 +14,9 @@ public class PantallaCuposController {
     private TextField campoEventoId;
 
     @FXML
+    private Label etiquetaCupos;
+
+    @FXML
     private Label etiquetaMensaje;
 
     public PantallaCuposController(ConsultarCupos consultarCupos) {
@@ -23,9 +26,12 @@ public class PantallaCuposController {
     @FXML
     private void alConsultar() {
         try {
-            int cupos = consultarCupos.consultar(campoEventoId.getText().trim());
-            Mensaje.exito(etiquetaMensaje, "Cupos disponibles: " + cupos);
+            String eventoId = campoEventoId.getText().trim();
+            int cupos = consultarCupos.consultar(eventoId);
+            etiquetaCupos.setText(String.valueOf(cupos));
+            Mensaje.exito(etiquetaMensaje, "Consulta hecha para el evento " + eventoId + ".");
         } catch (IllegalArgumentException | IllegalStateException e) {
+            etiquetaCupos.setText("—");
             Mensaje.error(etiquetaMensaje, e.getMessage());
         }
     }

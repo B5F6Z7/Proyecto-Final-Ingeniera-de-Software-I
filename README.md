@@ -10,7 +10,7 @@ siguiendo la arquitectura limpia, los principios de diseño y los patrones GRASP
 | --- | --- | --- |
 | Daniel Samboni | DanielSamboni | Controladores de interfaz gráfica y revisión de código |
 | Julian Baez | P4trick_B4tem4n | Testing y revision del contrato |
-| _(completar)_ | _(completar)_ | _(completar)_ |
+| Juan Pablo Torres | jupatorres-pixel | Documentación de una guía con cinco escenarios de prueba manual para los cuatro casos de uso de CampusFest. |
 | _(completar)_ | _(completar)_ | _(completar)_ |
 
 ## Requisitos
@@ -52,9 +52,25 @@ aplicación, con dos eventos de ejemplo:
 | CU3 · Editar evento | Organizador | `EditarEvento.obtener(...)`, `editar(...)` | `pantalla-evento.fxml` | Aforo menor que los ocupados, datos vacíos |
 | CU4 · Registrar ingreso con QR | Encargado de la entrada | `RegistrarIngreso.registrar(eventoId, codigo)` | `pantalla-ingreso.fxml` | Código de otro evento, reserva no confirmada, ingreso repetido |
 
-Flujo de prueba sugerido: en CU2 solicite una reserva en `ev-1` (el código queda en el
-formulario) y confírmela; copie el código, péguelo en CU4 y registre el ingreso; intente
-registrarlo otra vez para ver el rechazo.
+## Guía de pruebas manuales
+
+Abre CampusFest con `mvn javafx:run`. Para reproducir los valores de esta guía,
+parte de los datos de ejemplo. El evento `ev-2` comienza con aforo de 3 personas,
+1 cupo bloqueado y 2 cupos libres. Como H2 conserva los cambios entre ejecuciones,
+consulta primero el estado del evento si ya se usó en otras pruebas.
+
+| Escenario | Pasos | Resultado esperado |
+| --- | --- | --- |
+| **Consultar cupos (CU1)** | Abre **Consultar cupos**, escribe `ev-2` y pulsa **Consultar**. Repite con `ev-999`. | Con los datos de ejemplo, `ev-2` muestra 2 cupos libres. Para `ev-999`, la aplicación informa que el evento no existe. |
+| **Intentar ingresar con una reserva pendiente (CU2 y CU4)** | En CU2, solicita una reserva para `ev-1` con un código de estudiante de prueba, por ejemplo `160004512`. Copia el código de reserva sin confirmarla. En CU4, ingresa `ev-1` y ese código, y pulsa **Registrar ingreso**. | El ingreso se rechaza porque la reserva todavía está pendiente de confirmación. |
+| **Registrar un ingreso y comprobar el rechazo de duplicados (CU2 y CU4)** | Vuelve a CU2 y confirma la reserva anterior antes de la hora límite que muestra la aplicación. Si ya venció, solicita y confirma una nueva. En CU4, registra el ingreso para `ev-1` con el código confirmado y luego repite la operación con el mismo código. | El primer ingreso se registra correctamente y el segundo se rechaza porque el código ya se utilizó. |
+| **Agotar los cupos disponibles (CU1 y CU2)** | Consulta los cupos de `ev-2`. Con los datos de ejemplo, solicita y confirma dos reservas, usando un código de estudiante distinto para cada una. Vuelve a consultar los cupos e intenta solicitar una tercera reserva. | La consulta muestra 0 cupos libres y la tercera solicitud se rechaza. |
+| **Reducir el aforo por debajo del mínimo (CU3)** | Después de agotar los cupos de `ev-2`, abre **Editar evento**, escribe `ev-2` y pulsa **Cargar evento**. Cambia el aforo de `3` a `2`, pulsa **Guardar cambios** y vuelve a pulsar **Cargar evento**. | La aplicación rechaza el cambio porque hay 2 cupos reservados y 1 bloqueado. Al cargar de nuevo el evento, el aforo sigue siendo 3. |
+
+Al ejecutar cada escenario, registra el resultado observado y compáralo con el
+esperado. Si hay una diferencia, anota el paso en que ocurrió y el mensaje que
+mostró la aplicación.
+
 
 ## Arquitectura
 
@@ -137,3 +153,6 @@ commit, por eso no tienen un commit propio en el historial:
    Revisado por Julian Baez
 
 Revisado por Daniel Samboni.
+
+
+

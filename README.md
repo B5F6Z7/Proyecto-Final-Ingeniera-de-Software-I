@@ -9,9 +9,9 @@ siguiendo la arquitectura limpia, los principios de diseño y los patrones GRASP
 | Nombre | Usuario de GitHub | Aporte principal |
 | --- | --- | --- |
 | Daniel Samboni | DanielSamboni | Controladores de interfaz gráfica y revisión de código |
-| Julian Baez | P4trick_B4tem4n | Testing y revision del contrato |
-| _(completar)_ | _(completar)_ | _(completar)_ |
-| _(completar)_ | _(completar)_ | _(completar)_ |
+| Julian Baez | P4trick-B4tem4n | Testing y revision del contrato |
+| Brayan Zuluaga | B5F6Z7 | Persistencia en H2 (`RepositorioEventosH2`, `schema.sql`), ensamblaje en `App` y rediseño de las vistas |
+| Juan Torres | jupatorres-pixel | Entidades del dominio (`Evento`, `Reserva`, `EstadoReserva`, `Asistencia`) y casos de uso |
 
 ## Requisitos
 
